@@ -17,4 +17,17 @@ class Controller:
         * Lista di Tratte che superano il costo indicato come soglia
         """
         # TODO
+        if self._view.guadagno_medio_minimo.value.isdigit():
+            self._view.lista_visualizzazione.controls.clear()
+            self._model.getAllHub()
+            self._model.getAllSpedizioni()
+            self._model.costruisci_grafo(int(self._view.guadagno_medio_minimo.value))
+            self._view.lista_visualizzazione.controls.append(ft.Text(self._model.get_num_nodes()))
+            self._view.lista_visualizzazione.controls.append(ft.Text(self._model.get_num_edges()))
+            indice = 1
+            for i in self._model.get_all_edges():
+                self._view.lista_visualizzazione.controls.append(ft.Text(f"{indice}) {i}"))
+                indice += 1
+            self._view.update()
+        else: self._view.show_alert("Inserire un numero valido")
 
